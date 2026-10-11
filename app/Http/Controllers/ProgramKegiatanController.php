@@ -18,7 +18,14 @@ class ProgramKegiatanController extends Controller
             $query->where('prioritas', $request->prioritas);
         }
 
-        $prokers = $query->orderByRaw("FIELD(status, 'sedang_berjalan', 'persiapan', 'pembuatan_proposal', 'perencanaan', 'selesai', 'dibatalkan')")
+        $prokers = $query->orderByRaw("CASE status 
+                            WHEN 'sedang_berjalan' THEN 1 
+                            WHEN 'persiapan' THEN 2 
+                            WHEN 'pembuatan_proposal' THEN 3 
+                            WHEN 'perencanaan' THEN 4 
+                            WHEN 'selesai' THEN 5 
+                            WHEN 'dibatalkan' THEN 6 
+                            ELSE 7 END")
                          ->orderBy('tanggal_mulai')
                          ->paginate(15);
 
