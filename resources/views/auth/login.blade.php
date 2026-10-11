@@ -76,18 +76,6 @@
             <button type="submit" class="btn-login">Masuk ke Sistem</button>
         </form>
 
-        <div class="demo-accounts">
-            <h4>🔑 Akun Login (Password: password)</h4>
-            <div class="demo-row" style="color:#60a5fa;font-weight:600;"><span>⚡ Admin</span><span>admin@email.com</span></div>
-            <div class="demo-row" style="color:#34d399;font-weight:600;"><span>👤 User</span><span>user@email.com</span></div>
-            <div style="border-top:1px solid rgba(255,255,255,0.08);margin:0.35rem 0;"></div>
-            <div class="demo-row"><span>👑 Ketua</span><span>ketua@ekskul.test</span></div>
-            <div class="demo-row"><span>✍️ Sekretaris</span><span>sekretaris@ekskul.test</span></div>
-            <div class="demo-row"><span>💰 Bendahara</span><span>bendahara@ekskul.test</span></div>
-            <div class="demo-row"><span>👤 Anggota</span><span>anggota@ekskul.test</span></div>
-            <div class="demo-row"><span>🎓 Pembina</span><span>pembina@ekskul.test</span></div>
-        </div>
-
         <div class="footer-note">Sistem Manajemen Ekskul &copy; {{ date("Y") }}</div>
     </div>
 </div>

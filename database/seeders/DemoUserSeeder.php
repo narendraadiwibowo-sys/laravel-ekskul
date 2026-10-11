@@ -11,50 +11,95 @@ class DemoUserSeeder extends Seeder
     public function run(): void
     {
         $akun = [
+            // Super Admin
             [
-                'name' => 'Administrator',
+                'name' => 'Administrator Utama',
                 'email' => 'admin@email.com',
                 'role' => ['admin', 'ketua'],
                 'nis' => null,
-                'kelas' => 'Staff Admin',
+                'kelas' => 'Staff IT / Pembina',
             ],
+            // Ketua Umum & Wakil (Inti)
             [
-                'name' => 'User Anggota',
-                'email' => 'user@email.com',
-                'role' => ['user', 'anggota'],
-                'nis' => '12001',
-                'kelas' => 'XI RPL 1',
-            ],
-            [
-                'name' => 'Budi Ketua',
+                'name' => 'Ravanelli Putra Maulana',
                 'email' => 'ketua@ekskul.test',
                 'role' => ['ketua', 'admin'],
                 'nis' => '11001',
-                'kelas' => 'XII RPL 1',
+                'kelas' => 'XII AKL 1',
             ],
             [
-                'name' => 'Sari Sekretaris',
-                'email' => 'sekretaris@ekskul.test',
-                'role' => ['sekretaris'],
+                'name' => 'Shelly Evelyn',
+                'email' => 'wakil@ekskul.test',
+                'role' => ['ketua', 'admin'],
                 'nis' => '11002',
                 'kelas' => 'XII AKL 2',
             ],
+            // Divisi Sekretaris
             [
-                'name' => 'Andi Bendahara',
+                'name' => 'Okta Nanda Ariska',
+                'email' => 'sekretaris@ekskul.test',
+                'role' => ['sekretaris'],
+                'nis' => '11003',
+                'kelas' => 'XII AKL 1',
+            ],
+            // Divisi Bendahara
+            [
+                'name' => 'Vika Nur Aisyah',
                 'email' => 'bendahara@ekskul.test',
                 'role' => ['bendahara'],
-                'nis' => '11003',
-                'kelas' => 'XII BDP 1',
+                'nis' => '11004',
+                'kelas' => 'XII MPLB 4',
+            ],
+            // Divisi Humas
+            [
+                'name' => 'Rieska Nur Fathonah',
+                'email' => 'humas@ekskul.test',
+                'role' => ['humas'],
+                'nis' => '11005',
+                'kelas' => 'XII MPLB 1',
+            ],
+            // Divisi Acara
+            [
+                'name' => 'Fellisya Luthfia Milani',
+                'email' => 'acara@ekskul.test',
+                'role' => ['acara'],
+                'nis' => '11006',
+                'kelas' => 'XII MPLB 1',
+            ],
+            // Divisi PDD
+            [
+                'name' => 'Jireh Sabian Pangestu',
+                'email' => 'pdd@ekskul.test',
+                'role' => ['pdd'],
+                'nis' => '11007',
+                'kelas' => 'XII DKV 1',
+            ],
+            // Divisi Perkap
+            [
+                'name' => 'Leny Nur Apriliana',
+                'email' => 'perkap@ekskul.test',
+                'role' => ['perkap'],
+                'nis' => '11008',
+                'kelas' => 'XII AKL 5',
+            ],
+            // Anggota Biasa & User
+            [
+                'name' => 'Narendra User Anggota',
+                'email' => 'user@email.com',
+                'role' => ['user', 'anggota'],
+                'nis' => '12001',
+                'kelas' => 'XI PPLG 2',
             ],
             [
-                'name' => 'Dewi Anggota',
+                'name' => 'Dewi Anggota Aktif',
                 'email' => 'anggota@ekskul.test',
                 'role' => ['anggota', 'user'],
                 'nis' => '12002',
                 'kelas' => 'XI OTKP 3',
             ],
+            // Pembina
             [
-                'name' => 'Pak Guru Pembina',
+                'name' => 'Bapak Pembina Ekskul',
                 'email' => 'pembina@ekskul.test',
                 'role' => ['pembina'],
                 'nis' => null,
@@ -63,7 +108,7 @@ class DemoUserSeeder extends Seeder
         ];
 
         foreach ($akun as $a) {
-            $user = User::firstOrCreate(
+            $user = User::updateOrCreate(
                 ['email' => $a['email']],
                 [
                     'name' => $a['name'],
