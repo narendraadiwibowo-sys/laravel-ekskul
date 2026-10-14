@@ -224,13 +224,29 @@
     function tutupModalDrive() {
         const modal = document.getElementById('modal-tambah-drive');
         const form = document.getElementById('form-tambah-drive');
-        if (form) form.reset();
+        if (form) {
+            form.reset();
+            // Explicitly clear file inputs (some browsers ignore form.reset() for file inputs)
+            form.querySelectorAll('input[type="file"]').forEach(f => {
+                try { f.value = ''; } catch(e) { /* IE */ }
+                const newF = f.cloneNode(true);
+                f.parentNode.replaceChild(newF, f);
+            });
+        }
         modal.style.display = 'none';
     }
 
     function bukaModalDrive(tipe) {
         const form = document.getElementById('form-tambah-drive');
-        if (form) form.reset();
+        if (form) {
+            form.reset();
+            // Explicitly clear file inputs
+            form.querySelectorAll('input[type="file"]').forEach(f => {
+                try { f.value = ''; } catch(e) {}
+                const newF = f.cloneNode(true);
+                f.parentNode.replaceChild(newF, f);
+            });
+        }
 
         document.getElementById('input-pdd-tipe').value = tipe;
         const modal = document.getElementById('modal-tambah-drive');

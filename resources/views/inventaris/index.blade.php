@@ -378,21 +378,30 @@
     </div>
 
     <script>
+    function clearFileInputs(form) {
+        if (!form) return;
+        form.querySelectorAll('input[type="file"]').forEach(f => {
+            try { f.value = ''; } catch(e) {}
+            const newF = f.cloneNode(true);
+            f.parentNode.replaceChild(newF, f);
+        });
+    }
+
     function tutupModalTambahBarang() {
         const form = document.getElementById('form-tambah-barang');
-        if (form) form.reset();
+        if (form) { form.reset(); clearFileInputs(form); }
         document.getElementById('modal-tambah-barang').style.display = 'none';
     }
 
     function tutupModalPinjam() {
         const form = document.getElementById('form-pinjam-barang');
-        if (form) form.reset();
+        if (form) { form.reset(); clearFileInputs(form); }
         document.getElementById('modal-pinjam-barang').style.display = 'none';
     }
 
     function tutupModalEditBarang() {
         const form = document.getElementById('form-edit-barang');
-        if (form) form.reset();
+        if (form) { form.reset(); clearFileInputs(form); }
         document.getElementById('modal-edit-barang').style.display = 'none';
     }
 

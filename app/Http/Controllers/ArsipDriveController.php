@@ -49,7 +49,7 @@ class ArsipDriveController extends Controller
             'tanggal_event' => 'nullable|date',
             'tanggal_tayang' => 'nullable|date',
             'status_tayang' => 'nullable|in:draft,siap_tayang,sudah_tayang',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
+            'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg|max:3072',
         ]);
 
         if (empty($data['link_drive'])) {
@@ -87,7 +87,7 @@ class ArsipDriveController extends Controller
             'tanggal_event' => 'nullable|date',
             'tanggal_tayang' => 'nullable|date',
             'status_tayang' => 'nullable|in:draft,siap_tayang,sudah_tayang',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
+            'thumbnail' => 'nullable|file|mimes:jpeg,png,jpg|max:3072',
         ]);
 
         if (empty($data['link_drive'])) {

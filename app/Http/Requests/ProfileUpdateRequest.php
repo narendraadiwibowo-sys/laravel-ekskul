@@ -20,7 +20,7 @@ class ProfileUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'nis' => ['nullable', 'string', 'max:50'],
             'kelas' => ['nullable', 'string', 'max:50'],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:3072'],
+            'foto' => ['nullable', 'file', 'mimes:jpeg,png,jpg', 'max:3072'],
             'email' => [
                 'required',
                 'string',
