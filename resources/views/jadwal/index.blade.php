@@ -1,4 +1,4 @@
-<x-layouts.app title="Jadwal Kegiatan">
+<x-app-layout title="Jadwal Kegiatan">
     @if($jadwalBesok->isNotEmpty())
     <div class="banner-h1">
         <span class="banner-icon">🔔</span>
@@ -66,4 +66,4 @@
         </div>
         <div style="margin-top:1rem;">{{ $jadwals->links() }}</div>
     </div>
-</x-layouts.app>
+</x-app-layout>

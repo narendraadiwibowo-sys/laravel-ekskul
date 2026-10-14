@@ -1,4 +1,4 @@
-<x-layouts.app title="Edit Jadwal">
+<x-app-layout title="Edit Jadwal">
     <div class="card" style="max-width:640px;">
         <div class="card-header">
             <span class="card-title">✏️ Edit Jadwal Kegiatan</span>
@@ -46,4 +46,4 @@
             <button type="submit" class="btn btn-primary">💾 Update Jadwal</button>
         </form>
     </div>
-</x-layouts.app>
+</x-app-layout>

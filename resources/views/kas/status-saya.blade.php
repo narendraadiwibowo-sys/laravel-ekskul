@@ -1,4 +1,4 @@
-<x-layouts.app title="Status Kas Saya">
+<x-app-layout title="Status Kas Saya">
     <div class="card" style="max-width:680px;">
         <div class="card-header">
             <span class="card-title">💳 Status Kas Saya</span>
@@ -44,4 +44,4 @@
             </table>
         </div>
     </div>
-</x-layouts.app>
+</x-app-layout>

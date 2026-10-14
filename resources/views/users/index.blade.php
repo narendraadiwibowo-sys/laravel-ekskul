@@ -116,7 +116,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" style="text-align: center; color: #94a3b8; padding: 2.5rem;">
+                        <td colspan="7" style="text-align: center; color: #94a3b8; padding: 2.5rem;">
                             Tidak ditemukan anggota.
                         </td>
                     </tr>

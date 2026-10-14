@@ -30,11 +30,11 @@
         .sidebar-logo .logo-name { font-size: 0.95rem; font-weight: 700; color: #f1f5f9; line-height: 1.2; }
         .sidebar-logo .logo-sub { font-size: 0.65rem; color: var(--text-muted); }
 
-        .sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent; min-height: 0; }
-        .sidebar-nav::-webkit-scrollbar { width: 4px; }
+        .sidebar-nav { flex: 1; padding: 0.75rem 0; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: rgba(96,165,250,0.3) transparent; min-height: 0; }
+        .sidebar-nav::-webkit-scrollbar { width: 5px; }
         .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
-        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
-        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+        .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover { background: rgba(96,165,250,0.5); }
         .nav-section { margin-bottom: 0.25rem; }
         .nav-section-title { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.5rem 1.25rem 0.3rem; }
         .nav-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.55rem 1.25rem; color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; border-radius: 0; transition: all 0.2s; border-left: 3px solid transparent; }

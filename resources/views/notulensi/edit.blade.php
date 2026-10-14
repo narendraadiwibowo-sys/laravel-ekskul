@@ -1,4 +1,4 @@
-<x-layouts.app title="Edit Notulensi">
+<x-app-layout title="Edit Notulensi">
     <div class="card" style="max-width:720px;">
         <div class="card-header">
             <span class="card-title">✏️ Edit Notulensi</span>
@@ -30,4 +30,4 @@
             <button type="submit" class="btn btn-primary">💾 Update Notulensi</button>
         </form>
     </div>
-</x-layouts.app>
+</x-app-layout>

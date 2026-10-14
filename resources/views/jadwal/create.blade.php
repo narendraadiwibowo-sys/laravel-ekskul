@@ -1,4 +1,4 @@
-<x-layouts.app title="Tambah Jadwal">
+<x-app-layout title="Tambah Jadwal">
     <div class="card" style="max-width:640px;">
         <div class="card-header">
             <span class="card-title">+ Tambah Jadwal Kegiatan</span>
@@ -39,4 +39,4 @@
             <button type="submit" class="btn btn-primary">💾 Simpan Jadwal</button>
         </form>
     </div>
-</x-layouts.app>
+</x-app-layout>

@@ -1,4 +1,4 @@
-<x-layouts.app title="Notulensi">
+<x-app-layout title="Notulensi">
     <div class="card">
         <div class="card-header">
             <span class="card-title">📋 Notulensi Rapat</span>
@@ -38,4 +38,4 @@
         </div>
         <div style="margin-top:1rem;">{{ $notulensis->links() }}</div>
     </div>
-</x-layouts.app>
+</x-app-layout>

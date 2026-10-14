@@ -1,4 +1,4 @@
-<x-layouts.app title="{{ $notulensi->judul }}">
+<x-app-layout title="{{ $notulensi->judul }}">
     <div class="card" style="max-width:800px;">
         <div style="margin-bottom:1.25rem;">
             <a href="{{ route("notulensi.index") }}" class="btn btn-secondary btn-sm">← Kembali</a>
@@ -18,4 +18,4 @@
         </div>
         @endcan
     </div>
-</x-layouts.app>
+</x-app-layout>

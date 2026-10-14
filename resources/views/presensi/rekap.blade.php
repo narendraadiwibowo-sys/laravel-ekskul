@@ -1,4 +1,4 @@
-<x-layouts.app title="Rekap Presensi">
+<x-app-layout title="Rekap Presensi">
     <div class="card">
         <div class="card-header">
             <span class="card-title">📊 Rekap Kehadiran Anggota</span>
@@ -38,4 +38,4 @@
             </table>
         </div>
     </div>
-</x-layouts.app>
+</x-app-layout>

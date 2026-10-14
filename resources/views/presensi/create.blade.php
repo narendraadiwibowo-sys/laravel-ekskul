@@ -1,4 +1,4 @@
-<x-layouts.app title="Input Presensi">
+<x-app-layout title="Input Presensi">
     <div class="card">
         <div class="card-header">
             <div>
@@ -51,4 +51,4 @@
             @endif
         </form>
     </div>
-</x-layouts.app>
+</x-app-layout>

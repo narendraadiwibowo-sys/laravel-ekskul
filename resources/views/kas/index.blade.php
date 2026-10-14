@@ -1,4 +1,4 @@
-<x-layouts.app title="Manajemen Kas">
+<x-app-layout title="Manajemen Kas">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
         <div class="stat-card green">
             <span class="stat-label">Total Lunas Bulan Ini</span>
@@ -88,7 +88,7 @@
             </table>
         </div>
     </div>
-</x-layouts.app>
+</x-app-layout>
 
 {{-- Modal Bayar --}}
 <div id="modal-bayar" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;">

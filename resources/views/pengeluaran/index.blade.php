@@ -1,4 +1,4 @@
-<x-layouts.app title="Pengeluaran Kas">
+<x-app-layout title="Pengeluaran Kas">
     <div class="stat-card red" style="margin-bottom:1.25rem;max-width:280px;">
         <span class="stat-label">Total Pengeluaran Bulan Ini</span>
         <span class="stat-value">Rp {{ number_format($totalBulanIni,0,",",".") }}</span>
@@ -84,4 +84,4 @@
         </div>
         @endcan
     </div>
-</x-layouts.app>
+</x-app-layout>
