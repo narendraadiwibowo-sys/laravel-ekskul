@@ -36,17 +36,21 @@ class ProfileController extends Controller
             if ($cloudinaryUrl) {
                 $data['foto'] = $cloudinaryUrl;
             } else {
-                // Fallback to local storage if Cloudinary fails
+                // If Cloudinary fails, try local only if directory is writable (e.g. local Laragon)
                 $dir = public_path('images/users');
-                if (!file_exists($dir)) {
-                    @mkdir($dir, 0755, true);
+                try {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0755, true);
+                    }
+                    if ($user->foto && !str_starts_with($user->foto, 'http') && file_exists($dir . '/' . $user->foto)) {
+                        @unlink($dir . '/' . $user->foto);
+                    }
+                    $nama = time() . '_' . str($user->name)->slug() . '.' . $file->getClientOriginalExtension();
+                    $file->move($dir, $nama);
+                    $data['foto'] = $nama;
+                } catch (\Throwable $e) {
+                    return back()->withErrors(['foto' => 'Gagal mengunggah foto ke Cloud Storage. Pastikan format gambar valid (JPG/PNG).'])->withInput();
                 }
-                if ($user->foto && !str_starts_with($user->foto, 'http') && file_exists($dir . '/' . $user->foto)) {
-                    @unlink($dir . '/' . $user->foto);
-                }
-                $nama = time() . '_' . str($user->name)->slug() . '.' . $file->getClientOriginalExtension();
-                $file->move($dir, $nama);
-                $data['foto'] = $nama;
             }
         }
 

@@ -56,12 +56,16 @@ class StrukturOrganisasiController extends Controller
                 $data['foto'] = $cloudinaryUrl;
             } else {
                 $dir = public_path('images/pengurus');
-                if (!file_exists($dir)) {
-                    @mkdir($dir, 0755, true);
+                try {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0755, true);
+                    }
+                    $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
+                    $file->move($dir, $nama);
+                    $data['foto'] = $nama;
+                } catch (\Throwable $e) {
+                    return back()->withErrors(['foto' => 'Gagal mengunggah foto ke Cloud Storage.'])->withInput();
                 }
-                $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-                $file->move($dir, $nama);
-                $data['foto'] = $nama;
             }
         }
 
@@ -100,15 +104,19 @@ class StrukturOrganisasiController extends Controller
                 $data['foto'] = $cloudinaryUrl;
             } else {
                 $dir = public_path('images/pengurus');
-                if (!file_exists($dir)) {
-                    @mkdir($dir, 0755, true);
+                try {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0755, true);
+                    }
+                    if ($pengurus->foto && !str_starts_with($pengurus->foto, 'http') && file_exists($dir . '/' . $pengurus->foto)) {
+                        @unlink($dir . '/' . $pengurus->foto);
+                    }
+                    $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
+                    $file->move($dir, $nama);
+                    $data['foto'] = $nama;
+                } catch (\Throwable $e) {
+                    return back()->withErrors(['foto' => 'Gagal mengunggah foto ke Cloud Storage.'])->withInput();
                 }
-                if ($pengurus->foto && !str_starts_with($pengurus->foto, 'http') && file_exists($dir . '/' . $pengurus->foto)) {
-                    @unlink($dir . '/' . $pengurus->foto);
-                }
-                $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-                $file->move($dir, $nama);
-                $data['foto'] = $nama;
             }
         }
 

@@ -64,12 +64,16 @@ class ArsipDriveController extends Controller
                 $data['thumbnail'] = $cloudinaryUrl;
             } else {
                 $dir = public_path('images/thumbnails');
-                if (!file_exists($dir)) {
-                    @mkdir($dir, 0755, true);
+                try {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0755, true);
+                    }
+                    $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
+                    $file->move($dir, $nama);
+                    $data['thumbnail'] = $nama;
+                } catch (\Throwable $e) {
+                    return back()->withErrors(['thumbnail' => 'Gagal mengunggah thumbnail ke Cloud Storage.'])->withInput();
                 }
-                $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-                $file->move($dir, $nama);
-                $data['thumbnail'] = $nama;
             }
         }
 
@@ -108,15 +112,19 @@ class ArsipDriveController extends Controller
                 $data['thumbnail'] = $cloudinaryUrl;
             } else {
                 $dir = public_path('images/thumbnails');
-                if (!file_exists($dir)) {
-                    @mkdir($dir, 0755, true);
+                try {
+                    if (!file_exists($dir)) {
+                        @mkdir($dir, 0755, true);
+                    }
+                    if ($drive->thumbnail && !str_starts_with($drive->thumbnail, 'http') && file_exists($dir . '/' . $drive->thumbnail)) {
+                        @unlink($dir . '/' . $drive->thumbnail);
+                    }
+                    $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
+                    $file->move($dir, $nama);
+                    $data['thumbnail'] = $nama;
+                } catch (\Throwable $e) {
+                    return back()->withErrors(['thumbnail' => 'Gagal mengunggah thumbnail ke Cloud Storage.'])->withInput();
                 }
-                if ($drive->thumbnail && !str_starts_with($drive->thumbnail, 'http') && file_exists($dir . '/' . $drive->thumbnail)) {
-                    @unlink($dir . '/' . $drive->thumbnail);
-                }
-                $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-                $file->move($dir, $nama);
-                $data['thumbnail'] = $nama;
             }
         }
 
