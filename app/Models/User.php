@@ -24,8 +24,13 @@ class User extends Authenticatable
 
     public function fotoUrl(): string
     {
-        if ($this->foto && file_exists(public_path('images/users/' . $this->foto))) {
-            return asset('images/users/' . $this->foto);
+        if ($this->foto) {
+            if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+                return $this->foto;
+            }
+            if (file_exists(public_path('images/users/' . $this->foto))) {
+                return asset('images/users/' . $this->foto);
+            }
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=1d4ed8&color=fff&size=150';
     }

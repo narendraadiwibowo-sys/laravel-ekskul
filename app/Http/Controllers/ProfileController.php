@@ -30,17 +30,24 @@ class ProfileController extends Controller
         $user = $request->user();
 
         if ($request->hasFile('foto')) {
-            $dir = public_path('images/users');
-            if (!file_exists($dir)) {
-                @mkdir($dir, 0755, true);
-            }
-            if ($user->foto && file_exists($dir . '/' . $user->foto)) {
-                @unlink($dir . '/' . $user->foto);
-            }
             $file = $request->file('foto');
-            $nama = time() . '_' . str($user->name)->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move($dir, $nama);
-            $data['foto'] = $nama;
+            $cloudinaryUrl = \App\Services\CloudinaryService::upload($file, 'ekskul/users');
+
+            if ($cloudinaryUrl) {
+                $data['foto'] = $cloudinaryUrl;
+            } else {
+                // Fallback to local storage if Cloudinary fails
+                $dir = public_path('images/users');
+                if (!file_exists($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                if ($user->foto && !str_starts_with($user->foto, 'http') && file_exists($dir . '/' . $user->foto)) {
+                    @unlink($dir . '/' . $user->foto);
+                }
+                $nama = time() . '_' . str($user->name)->slug() . '.' . $file->getClientOriginalExtension();
+                $file->move($dir, $nama);
+                $data['foto'] = $nama;
+            }
         }
 
         $user->fill($data);

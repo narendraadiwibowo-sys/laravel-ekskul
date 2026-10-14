@@ -303,8 +303,8 @@
 
     <div class="sidebar-footer">
         <a href="{{ route('profile.edit') }}" class="user-card" style="text-decoration:none; transition: background 0.2s; cursor:pointer;" title="Buka Pengaturan Profil">
-            @if(auth()->user()->foto && file_exists(public_path('images/users/' . auth()->user()->foto)))
-                <img src="{{ asset('images/users/' . auth()->user()->foto) }}" alt="{{ auth()->user()->name }}" class="user-avatar" style="object-fit:cover; border:1px solid #3b82f6;">
+            @if(auth()->user()->foto)
+                <img src="{{ auth()->user()->fotoUrl() }}" alt="{{ auth()->user()->name }}" class="user-avatar" style="object-fit:cover; border:1px solid #3b82f6;">
             @else
                 <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
             @endif
@@ -326,8 +326,8 @@
         <span class="page-title">{{ $title ?? "Dashboard" }}</span>
         <div class="topbar-actions">
             <a href="{{ route('profile.edit') }}" title="Profil Anda" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
-                @if(auth()->user()->foto && file_exists(public_path('images/users/' . auth()->user()->foto)))
-                    <img src="{{ asset('images/users/' . auth()->user()->foto) }}" alt="{{ auth()->user()->name }}" style="width:34px; height:34px; object-fit:cover; border-radius:50%; border:2px solid #3b82f6;">
+                @if(auth()->user()->foto)
+                    <img src="{{ auth()->user()->fotoUrl() }}" alt="{{ auth()->user()->name }}" style="width:34px; height:34px; object-fit:cover; border-radius:50%; border:2px solid #3b82f6;">
                 @else
                     <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg, #1d4ed8, #7c3aed); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}

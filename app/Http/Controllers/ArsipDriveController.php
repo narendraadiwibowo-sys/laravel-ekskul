@@ -57,14 +57,20 @@ class ArsipDriveController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $dir = public_path('images/thumbnails');
-            if (!file_exists($dir)) {
-                @mkdir($dir, 0755, true);
-            }
             $file = $request->file('thumbnail');
-            $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move($dir, $nama);
-            $data['thumbnail'] = $nama;
+            $cloudinaryUrl = \App\Services\CloudinaryService::upload($file, 'ekskul/thumbnails');
+
+            if ($cloudinaryUrl) {
+                $data['thumbnail'] = $cloudinaryUrl;
+            } else {
+                $dir = public_path('images/thumbnails');
+                if (!file_exists($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
+                $file->move($dir, $nama);
+                $data['thumbnail'] = $nama;
+            }
         }
 
         $data['dibuat_oleh'] = auth()->id();
@@ -95,17 +101,23 @@ class ArsipDriveController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            $dir = public_path('images/thumbnails');
-            if (!file_exists($dir)) {
-                @mkdir($dir, 0755, true);
-            }
-            if ($drive->thumbnail && file_exists($dir . '/' . $drive->thumbnail)) {
-                @unlink($dir . '/' . $drive->thumbnail);
-            }
             $file = $request->file('thumbnail');
-            $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move($dir, $nama);
-            $data['thumbnail'] = $nama;
+            $cloudinaryUrl = \App\Services\CloudinaryService::upload($file, 'ekskul/thumbnails');
+
+            if ($cloudinaryUrl) {
+                $data['thumbnail'] = $cloudinaryUrl;
+            } else {
+                $dir = public_path('images/thumbnails');
+                if (!file_exists($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                if ($drive->thumbnail && !str_starts_with($drive->thumbnail, 'http') && file_exists($dir . '/' . $drive->thumbnail)) {
+                    @unlink($dir . '/' . $drive->thumbnail);
+                }
+                $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
+                $file->move($dir, $nama);
+                $data['thumbnail'] = $nama;
+            }
         }
 
         $drive->update($data);

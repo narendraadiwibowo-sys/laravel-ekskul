@@ -17,11 +17,16 @@ class Pengurus extends Model
 
     public function fotoUrl(): string
     {
-        if ($this->foto && file_exists(public_path('images/pengurus/' . $this->foto))) {
-            return asset('images/pengurus/' . $this->foto);
-        }
-        if ($this->foto && file_exists(public_path('images/' . $this->foto))) {
-            return asset('images/' . $this->foto);
+        if ($this->foto) {
+            if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+                return $this->foto;
+            }
+            if (file_exists(public_path('images/pengurus/' . $this->foto))) {
+                return asset('images/pengurus/' . $this->foto);
+            }
+            if (file_exists(public_path('images/' . $this->foto))) {
+                return asset('images/' . $this->foto);
+            }
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->nama) . '&background=1e3a8a&color=fff&size=300';
     }

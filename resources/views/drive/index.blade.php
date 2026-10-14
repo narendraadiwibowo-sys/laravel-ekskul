@@ -30,7 +30,7 @@
             <div class="banner-sub" style="color: #e9d5ff;">
                 🎨 <strong>{{ $p->judul }}</strong> — Jadwal Tayang: {{ $p->tanggal_tayang ? $p->tanggal_tayang->format('d M Y') : 'H-1' }}
                 @if($p->thumbnail)
-                · <a href="{{ asset('images/thumbnails/' . $p->thumbnail) }}" target="_blank" style="color:#67e8f9; text-decoration:underline;">Lihat File Desain</a>
+                · <a href="{{ $p->thumbnailUrl() }}" target="_blank" style="color:#67e8f9; text-decoration:underline;">Lihat File Desain</a>
                 @endif
             </div>
             @endforeach
@@ -84,7 +84,7 @@
             <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, border-color 0.2s;">
                 <div style="height: 180px; background: #0f172a; position: relative; overflow: hidden;">
                     @if($drive->thumbnail)
-                        <img src="{{ asset('images/thumbnails/' . $drive->thumbnail) }}" alt="{{ $drive->judul }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        <img src="{{ $drive->thumbnailUrl() }}" alt="{{ $drive->judul }}" style="width: 100%; height: 100%; object-fit: cover;">
                     @else
                         <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e293b, #0f172a); color: #8b5cf6;">
                             <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -128,7 +128,7 @@
                             Buka Folder Google Drive
                         </a>
                         @elseif($drive->thumbnail)
-                        <a href="{{ asset('images/thumbnails/' . $drive->thumbnail) }}" target="_blank" class="btn btn-primary btn-sm" style="background: #8b5cf6; justify-content: center;">
+                        <a href="{{ $drive->thumbnailUrl() }}" target="_blank" class="btn btn-primary btn-sm" style="background: #8b5cf6; justify-content: center;">
                             🔍 Lihat Desain Pamflet HD
                         </a>
                         @endif

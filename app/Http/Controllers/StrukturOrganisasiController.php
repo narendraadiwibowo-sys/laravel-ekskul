@@ -49,14 +49,20 @@ class StrukturOrganisasiController extends Controller
         ]);
 
         if ($request->hasFile('foto')) {
-            $dir = public_path('images/pengurus');
-            if (!file_exists($dir)) {
-                @mkdir($dir, 0755, true);
-            }
             $file = $request->file('foto');
-            $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move($dir, $nama);
-            $data['foto'] = $nama;
+            $cloudinaryUrl = \App\Services\CloudinaryService::upload($file, 'ekskul/pengurus');
+
+            if ($cloudinaryUrl) {
+                $data['foto'] = $cloudinaryUrl;
+            } else {
+                $dir = public_path('images/pengurus');
+                if (!file_exists($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
+                $file->move($dir, $nama);
+                $data['foto'] = $nama;
+            }
         }
 
         $data['is_koordinator'] = $request->boolean('is_koordinator');
@@ -81,24 +87,29 @@ class StrukturOrganisasiController extends Controller
             'is_koordinator' => 'nullable|boolean',
             'kelas' => 'nullable|string|max:50',
             'instagram' => 'nullable|string|max:100',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
+            'foto' => 'nullable|file|mimes:jpeg,png,jpg|max:5120',
             'urutan' => 'nullable|integer',
             'periode' => 'nullable|string|max:20',
         ]);
 
         if ($request->hasFile('foto')) {
-            $dir = public_path('images/pengurus');
-            if (!file_exists($dir)) {
-                @mkdir($dir, 0755, true);
-            }
-            // hapus foto lama jika ada
-            if ($pengurus->foto && file_exists($dir . '/' . $pengurus->foto)) {
-                @unlink($dir . '/' . $pengurus->foto);
-            }
             $file = $request->file('foto');
-            $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move($dir, $nama);
-            $data['foto'] = $nama;
+            $cloudinaryUrl = \App\Services\CloudinaryService::upload($file, 'ekskul/pengurus');
+
+            if ($cloudinaryUrl) {
+                $data['foto'] = $cloudinaryUrl;
+            } else {
+                $dir = public_path('images/pengurus');
+                if (!file_exists($dir)) {
+                    @mkdir($dir, 0755, true);
+                }
+                if ($pengurus->foto && !str_starts_with($pengurus->foto, 'http') && file_exists($dir . '/' . $pengurus->foto)) {
+                    @unlink($dir . '/' . $pengurus->foto);
+                }
+                $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
+                $file->move($dir, $nama);
+                $data['foto'] = $nama;
+            }
         }
 
         $data['is_koordinator'] = $request->boolean('is_koordinator');

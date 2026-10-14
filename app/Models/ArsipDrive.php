@@ -29,4 +29,15 @@ class ArsipDrive extends Model
     {
         return $this->belongsTo(User::class, 'dibuat_oleh');
     }
+
+    public function thumbnailUrl(): ?string
+    {
+        if (!$this->thumbnail) {
+            return null;
+        }
+        if (str_starts_with($this->thumbnail, 'http://') || str_starts_with($this->thumbnail, 'https://')) {
+            return $this->thumbnail;
+        }
+        return asset('images/thumbnails/' . $this->thumbnail);
+    }
 }
