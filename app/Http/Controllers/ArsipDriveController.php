@@ -49,7 +49,7 @@ class ArsipDriveController extends Controller
             'tanggal_event' => 'nullable|date',
             'tanggal_tayang' => 'nullable|date',
             'status_tayang' => 'nullable|in:draft,siap_tayang,sudah_tayang',
-            'thumbnail' => 'nullable|image|max:3072',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ]);
 
         if (empty($data['link_drive'])) {
@@ -57,9 +57,13 @@ class ArsipDriveController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
+            $dir = public_path('images/thumbnails');
+            if (!file_exists($dir)) {
+                @mkdir($dir, 0755, true);
+            }
             $file = $request->file('thumbnail');
             $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/thumbnails'), $nama);
+            $file->move($dir, $nama);
             $data['thumbnail'] = $nama;
         }
 
@@ -83,7 +87,7 @@ class ArsipDriveController extends Controller
             'tanggal_event' => 'nullable|date',
             'tanggal_tayang' => 'nullable|date',
             'status_tayang' => 'nullable|in:draft,siap_tayang,sudah_tayang',
-            'thumbnail' => 'nullable|image|max:3072',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ]);
 
         if (empty($data['link_drive'])) {
@@ -91,12 +95,16 @@ class ArsipDriveController extends Controller
         }
 
         if ($request->hasFile('thumbnail')) {
-            if ($drive->thumbnail && file_exists(public_path('images/thumbnails/' . $drive->thumbnail))) {
-                @unlink(public_path('images/thumbnails/' . $drive->thumbnail));
+            $dir = public_path('images/thumbnails');
+            if (!file_exists($dir)) {
+                @mkdir($dir, 0755, true);
+            }
+            if ($drive->thumbnail && file_exists($dir . '/' . $drive->thumbnail)) {
+                @unlink($dir . '/' . $drive->thumbnail);
             }
             $file = $request->file('thumbnail');
             $nama = time() . '_' . str($data['judul'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/thumbnails'), $nama);
+            $file->move($dir, $nama);
             $data['thumbnail'] = $nama;
         }
 

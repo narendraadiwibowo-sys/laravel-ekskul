@@ -212,10 +212,10 @@
         <div style="background:#1e293b; border:1px solid #334155; border-radius:14px; max-width:550px; width:100%; padding:1.5rem; max-height:90vh; overflow-y:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
                 <h3 style="font-size:1.1rem; font-weight:700; color:#f1f5f9;">+ Tambah Inventaris Barang Baru</h3>
-                <button onclick="document.getElementById('modal-tambah-barang').style.display='none'" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
+                <button onclick="tutupModalTambahBarang()" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
             </div>
 
-            <form action="{{ route('inventaris.store') }}" method="POST">
+            <form id="form-tambah-barang" action="{{ route('inventaris.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label>Nama Barang *</label>
@@ -260,7 +260,7 @@
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" onclick="document.getElementById('modal-tambah-barang').style.display='none'" class="btn btn-secondary">Batal</button>
+                    <button type="button" onclick="tutupModalTambahBarang()" class="btn btn-secondary">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan Barang</button>
                 </div>
             </form>
@@ -309,7 +309,7 @@
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" onclick="document.getElementById('modal-pinjam-barang').style.display='none'" class="btn btn-secondary">Batal</button>
+                    <button type="button" onclick="tutupModalPinjam()" class="btn btn-secondary">Batal</button>
                     <button type="submit" class="btn btn-primary">Catat Peminjaman</button>
                 </div>
             </form>
@@ -321,7 +321,7 @@
         <div style="background:#1e293b; border:1px solid #334155; border-radius:14px; max-width:550px; width:100%; padding:1.5rem;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
                 <h3 style="font-size:1.1rem; font-weight:700; color:#f1f5f9;">Update Data Inventaris</h3>
-                <button onclick="document.getElementById('modal-edit-barang').style.display='none'" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
+                <button onclick="tutupModalEditBarang()" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
             </div>
 
             <form id="form-edit-barang" method="POST">
@@ -370,7 +370,7 @@
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" onclick="document.getElementById('modal-edit-barang').style.display='none'" class="btn btn-secondary">Batal</button>
+                    <button type="button" onclick="tutupModalEditBarang()" class="btn btn-secondary">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                 </div>
             </form>
@@ -378,8 +378,28 @@
     </div>
 
     <script>
+    function tutupModalTambahBarang() {
+        const form = document.getElementById('form-tambah-barang');
+        if (form) form.reset();
+        document.getElementById('modal-tambah-barang').style.display = 'none';
+    }
+
+    function tutupModalPinjam() {
+        const form = document.getElementById('form-pinjam-barang');
+        if (form) form.reset();
+        document.getElementById('modal-pinjam-barang').style.display = 'none';
+    }
+
+    function tutupModalEditBarang() {
+        const form = document.getElementById('form-edit-barang');
+        if (form) form.reset();
+        document.getElementById('modal-edit-barang').style.display = 'none';
+    }
+
     function bukaPinjam(item) {
-        document.getElementById('form-pinjam-barang').action = '/inventaris/' + item.id + '/pinjam';
+        const form = document.getElementById('form-pinjam-barang');
+        if (form) form.reset();
+        form.action = '/inventaris/' + item.id + '/pinjam';
         document.getElementById('pinjam-nama-barang').innerText = item.nama_barang;
         document.getElementById('pinjam-max-unit').max = item.jumlah;
         document.getElementById('modal-pinjam-barang').style.display = 'flex';

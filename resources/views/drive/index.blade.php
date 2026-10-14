@@ -164,10 +164,10 @@
         <div style="background:#1e293b; border:1px solid #334155; border-radius:14px; max-width:550px; width:100%; padding:1.5rem; max-height:90vh; overflow-y:auto;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
                 <h3 id="modal-pdd-title" style="font-size:1.1rem; font-weight:700; color:#f1f5f9;">+ Simpan Arsip PDD</h3>
-                <button onclick="document.getElementById('modal-tambah-drive').style.display='none'" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
+                <button onclick="tutupModalDrive()" style="background:none; border:none; color:#94a3b8; font-size:1.25rem; cursor:pointer;">&times;</button>
             </div>
 
-            <form action="{{ route('drive.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="form-tambah-drive" action="{{ route('drive.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="tipe" id="input-pdd-tipe" value="drive">
 
@@ -208,12 +208,12 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Upload Gambar / Poster Pamflet (Opsional)</label>
-                    <input type="file" name="thumbnail" class="form-control" accept="image/*">
+                    <label>Upload Gambar / Poster Pamflet (Opsional, JPG/PNG Maks 3MB)</label>
+                    <input type="file" name="thumbnail" class="form-control" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem;">
-                    <button type="button" onclick="document.getElementById('modal-tambah-drive').style.display='none'" class="btn btn-secondary">Batal</button>
+                    <button type="button" onclick="tutupModalDrive()" class="btn btn-secondary">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
             </form>
@@ -221,7 +221,17 @@
     </div>
 
     <script>
+    function tutupModalDrive() {
+        const modal = document.getElementById('modal-tambah-drive');
+        const form = document.getElementById('form-tambah-drive');
+        if (form) form.reset();
+        modal.style.display = 'none';
+    }
+
     function bukaModalDrive(tipe) {
+        const form = document.getElementById('form-tambah-drive');
+        if (form) form.reset();
+
         document.getElementById('input-pdd-tipe').value = tipe;
         const modal = document.getElementById('modal-tambah-drive');
         const title = document.getElementById('modal-pdd-title');

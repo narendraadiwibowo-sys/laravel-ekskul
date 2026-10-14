@@ -18,8 +18,17 @@ class User extends Authenticatable
         'password',
         'nis', // nomor induk siswa, opsional
         'kelas',
+        'foto',
         'is_active',
     ];
+
+    public function fotoUrl(): string
+    {
+        if ($this->foto && file_exists(public_path('images/users/' . $this->foto))) {
+            return asset('images/users/' . $this->foto);
+        }
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=1d4ed8&color=fff&size=150';
+    }
 
     protected $hidden = [
         'password',

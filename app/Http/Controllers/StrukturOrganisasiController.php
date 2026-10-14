@@ -43,15 +43,19 @@ class StrukturOrganisasiController extends Controller
             'is_koordinator' => 'nullable|boolean',
             'kelas' => 'nullable|string|max:50',
             'instagram' => 'nullable|string|max:100',
-            'foto' => 'nullable|image|max:5120',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'urutan' => 'nullable|integer',
             'periode' => 'nullable|string|max:20',
         ]);
 
         if ($request->hasFile('foto')) {
+            $dir = public_path('images/pengurus');
+            if (!file_exists($dir)) {
+                @mkdir($dir, 0755, true);
+            }
             $file = $request->file('foto');
             $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/pengurus'), $nama);
+            $file->move($dir, $nama);
             $data['foto'] = $nama;
         }
 
@@ -77,19 +81,23 @@ class StrukturOrganisasiController extends Controller
             'is_koordinator' => 'nullable|boolean',
             'kelas' => 'nullable|string|max:50',
             'instagram' => 'nullable|string|max:100',
-            'foto' => 'nullable|image|max:5120',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'urutan' => 'nullable|integer',
             'periode' => 'nullable|string|max:20',
         ]);
 
         if ($request->hasFile('foto')) {
+            $dir = public_path('images/pengurus');
+            if (!file_exists($dir)) {
+                @mkdir($dir, 0755, true);
+            }
             // hapus foto lama jika ada
-            if ($pengurus->foto && file_exists(public_path('images/pengurus/' . $pengurus->foto))) {
-                @unlink(public_path('images/pengurus/' . $pengurus->foto));
+            if ($pengurus->foto && file_exists($dir . '/' . $pengurus->foto)) {
+                @unlink($dir . '/' . $pengurus->foto);
             }
             $file = $request->file('foto');
             $nama = time() . '_' . str($data['nama'])->slug() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images/pengurus'), $nama);
+            $file->move($dir, $nama);
             $data['foto'] = $nama;
         }
 

@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
 
@@ -21,6 +21,29 @@
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <x-input-label for="nis" value="NIS (Nomor Induk Siswa)" />
+                <x-text-input id="nis" name="nis" type="text" class="mt-1 block w-full" :value="old('nis', $user->nis)" placeholder="Contoh: 11001" />
+                <x-input-error class="mt-2" :messages="$errors->get('nis')" />
+            </div>
+
+            <div>
+                <x-input-label for="kelas" value="Kelas" />
+                <x-text-input id="kelas" name="kelas" type="text" class="mt-1 block w-full" :value="old('kelas', $user->kelas)" placeholder="Contoh: XII PPLG 1" />
+                <x-input-error class="mt-2" :messages="$errors->get('kelas')" />
+            </div>
+        </div>
+
+        <div>
+            <x-input-label for="foto" value="Foto Profil (JPG / PNG, Maks 3MB)" />
+            <div class="flex items-center gap-4 mt-2">
+                <img src="{{ $user->fotoUrl() }}" alt="{{ $user->name }}" class="w-14 h-14 rounded-full object-cover border border-slate-700">
+                <input id="foto" name="foto" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" class="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer">
+            </div>
+            <x-input-error class="mt-2" :messages="$errors->get('foto')" />
         </div>
 
         <div>

@@ -293,13 +293,18 @@
     </nav>
 
     <div class="sidebar-footer">
-        <div class="user-card">
-            <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-            <div class="user-info">
-                <div class="user-name">{{ Str::limit(auth()->user()->name, 18) }}</div>
-                <div class="user-role">{{ auth()->user()->getRoleNames()->first() ?? 'anggota' }}</div>
+        <a href="{{ route('profile.edit') }}" class="user-card" style="text-decoration:none; transition: background 0.2s; cursor:pointer;" title="Buka Pengaturan Profil">
+            @if(auth()->user()->foto && file_exists(public_path('images/users/' . auth()->user()->foto)))
+                <img src="{{ asset('images/users/' . auth()->user()->foto) }}" alt="{{ auth()->user()->name }}" class="user-avatar" style="object-fit:cover; border:1px solid #3b82f6;">
+            @else
+                <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+            @endif
+            <div class="user-info" style="flex:1; min-width:0;">
+                <div class="user-name" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ auth()->user()->name }}</div>
+                <div class="user-role">{{ auth()->user()->kelas ?: (auth()->user()->getRoleNames()->first() ?? 'anggota') }}</div>
             </div>
-        </div>
+            <svg width="14" height="14" fill="none" stroke="#94a3b8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
     </div>
 </aside>
 
@@ -311,7 +316,15 @@
         </button>
         <span class="page-title">{{ $title ?? "Dashboard" }}</span>
         <div class="topbar-actions">
-            <img src="{{ asset('images/logo-smkn1.jpg') }}" alt="SMKN1" style="height:30px;object-fit:contain;border-radius:50%;">
+            <a href="{{ route('profile.edit') }}" title="Profil Anda" style="display:flex; align-items:center; gap:0.5rem; text-decoration:none;">
+                @if(auth()->user()->foto && file_exists(public_path('images/users/' . auth()->user()->foto)))
+                    <img src="{{ asset('images/users/' . auth()->user()->foto) }}" alt="{{ auth()->user()->name }}" style="width:34px; height:34px; object-fit:cover; border-radius:50%; border:2px solid #3b82f6;">
+                @else
+                    <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg, #1d4ed8, #7c3aed); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:0.85rem;">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                @endif
+            </a>
             <form action="{{ route('logout') }}" method="POST" style="margin:0;">
                 @csrf
                 <button type="submit" class="btn-logout">
@@ -348,6 +361,25 @@ function toggleSidebar() {
     sidebar.classList.toggle("open");
     overlay.style.display = sidebar.classList.contains("open") ? "block" : "none";
 }
+
+// Simpan & kembalikan posisi scroll sidebar agar tidak reset ke atas
+(function() {
+    const nav = document.querySelector('.sidebar-nav');
+    if (nav) {
+        const savedScroll = sessionStorage.getItem('sidebar_scroll_pos');
+        if (savedScroll !== null) {
+            nav.scrollTop = parseInt(savedScroll, 10);
+        }
+        nav.addEventListener('scroll', function() {
+            sessionStorage.setItem('sidebar_scroll_pos', nav.scrollTop);
+        });
+        document.querySelectorAll('.sidebar-nav a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                sessionStorage.setItem('sidebar_scroll_pos', nav.scrollTop);
+            });
+        });
+    }
+})();
 </script>
 </body>
 </html>

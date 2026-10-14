@@ -11,7 +11,7 @@ class InventarisController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Inventaris::with(['dicatatOleh', 'peminjamanAktif.peminjam']);
+        $query = Inventaris::with('pencatat');
 
         if ($request->filled('kategori')) {
             $query->where('kategori', $request->kategori);
